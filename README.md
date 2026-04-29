@@ -7,13 +7,13 @@
 
 A modern, responsive web application for pet adoption and temporary custody management, powered by blockchain-backed trust guarantees (Stellar trust layer integration).
 
----
+***
 
 ## Overview
 
 PetAd Frontend is the client-side application for the PetAd platform, enabling users to browse pets, initiate adoption processes, and manage temporary custody arrangements. The application communicates exclusively with the PetAd backend API and does not directly interact with blockchain infrastructure.
 
----
+***
 
 ## ✨ Features
 
@@ -24,21 +24,21 @@ PetAd Frontend is the client-side application for the PetAd platform, enabling u
 - **📄 Document Management** - Secure upload and verification of required documents
 - **🔔 Real-time Updates** - Live status notifications for adoption and custody requests
 
----
+***
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **React 18+** | UI library |
-| **TypeScript** | Type-safe development |
-| **Vite** | Build tool and dev server |
-| **Tailwind CSS** | Utility-first styling |
-| **TanStack Query** | Server state management |
-| **React Router** | Client-side routing |
-| **Zod** | Schema validation |
+| Technology         | Purpose                   |
+| ------------------ | ------------------------- |
+| **React 18+**      | UI library                |
+| **TypeScript**     | Type-safe development     |
+| **Vite**           | Build tool and dev server |
+| **Tailwind CSS**   | Utility-first styling     |
+| **TanStack Query** | Server state management   |
+| **React Router**   | Client-side routing       |
+| **Zod**            | Schema validation         |
 
----
+***
 
 ## 📦 Prerequisites
 
@@ -54,7 +54,7 @@ node --version
 npm --version
 ```
 
----
+***
 
 ## 🚀 Getting Started
 
@@ -67,7 +67,7 @@ git clone https://github.com/amina69/PetAd-Frontend.git
 cd petad-frontend
 ```
 
-2. **Install dependencies**
+1. **Install dependencies**
 
 ```bash
 npm install
@@ -79,7 +79,7 @@ Or using pnpm:
 pnpm install
 ```
 
----
+***
 
 ### Environment Setup
 
@@ -99,7 +99,7 @@ VITE_ENABLE_ANALYTICS=false
 VITE_MSW=true
 ```
 
----
+***
 
 ### Running the App
 
@@ -115,7 +115,7 @@ The application will be available at:
 http://localhost:5173
 ```
 
----
+***
 
 ## 📁 Project Structure
 
@@ -168,7 +168,7 @@ src/
 - **`hooks/`** - Custom React hooks for shared logic
 - **`pages/`** - Top-level route components
 
----
+***
 
 ## 🧑‍💻 Development Guidelines
 
@@ -222,27 +222,27 @@ const adoptionFormSchema = z.object({
 type AdoptionFormData = z.infer<typeof adoptionFormSchema>;
 ```
 
----
+***
 
 ## 📜 Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server (hot reload enabled) |
-| `npm run build` | Build optimized production bundle |
-| `npm run preview` | Preview production build locally |
-| `npm run type-check` | Run TypeScript compiler checks |
-| `npm run format` | Format code with Prettier |
+| Command              | Description                                   |
+| -------------------- | --------------------------------------------- |
+| `npm run dev`        | Start development server (hot reload enabled) |
+| `npm run build`      | Build optimized production bundle             |
+| `npm run preview`    | Preview production build locally              |
+| `npm run type-check` | Run TypeScript compiler checks                |
+| `npm run format`     | Format code with Prettier                     |
 
----
+***
 
 **Important:** Ensure environment variables are configured in your deployment platform:
 
 - `VITE_API_URL` - Backend API endpoint
 
----
+***
 
-##  Mock API (MSW)
+## Mock API (MSW)
 
 This project uses [Mock Service Worker (MSW)](https://mswjs.io/) to intercept API requests during **development** and **Vitest tests**, so the frontend can be developed without the backend running.
 
@@ -256,14 +256,14 @@ Look for `[MSW] Mocking enabled.` in the browser console to confirm it is active
 
 ### Covered domains
 
-| Domain | File | Status |
-|--------|------|--------|
-| Escrow | `src/mocks/handlers/escrow.ts` | ✅ Matches backend |
-| Adoption status | `src/mocks/handlers/status.ts` | ✅ Matches backend |
-| Documents | `src/mocks/handlers/files.ts` | ✅ Matches backend |
-| Approval | `src/mocks/handlers/approval.ts` | 🔶 Phase 2 stub |
-| Dispute | `src/mocks/handlers/dispute.ts` | 🔶 Phase 2 stub |
-| Notifications | `src/mocks/handlers/notify.ts` | 🔶 Phase 2 stub |
+| Domain          | File                             | Status            |
+| --------------- | -------------------------------- | ----------------- |
+| Escrow          | `src/mocks/handlers/escrow.ts`   | ✅ Matches backend |
+| Adoption status | `src/mocks/handlers/status.ts`   | ✅ Matches backend |
+| Documents       | `src/mocks/handlers/files.ts`    | ✅ Matches backend |
+| Approval        | `src/mocks/handlers/approval.ts` | 🔶 Phase 2 stub   |
+| Dispute         | `src/mocks/handlers/dispute.ts`  | 🔶 Phase 2 stub   |
+| Notifications   | `src/mocks/handlers/notify.ts`   | 🔶 Phase 2 stub   |
 
 ### Simulate slow responses
 
@@ -289,7 +289,7 @@ it('shows disputed state', async () => {
 });
 ```
 
----
+***
 
 ## 🔗 API Communication
 
@@ -322,14 +322,16 @@ export function usePets() {
 }
 ```
 
----
+***
+
 ## 🎨 Design Reference
 
 This project follows a comprehensive design system documented in Figma. Please refer to the design files when implementing new features or components to ensure consistency.
 
-**📐 Figma Design File:** [PetAd Design System](https://www.figma.com/design/avLyxNlVzfPjCft7sVrlzs/PETAD?node-id=0-1&t=zUA1sGPYsp60vYt4-1)
+**📐 Figma Design File:** [PetAd Design System](https://www.figma.com/design/avLyxNlVzfPjCft7sVrlzs/PETAD?node-id=0-1\&t=zUA1sGPYsp60vYt4-1)
 
 The design includes:
+
 - 🎨 Complete UI component library
 - 📱 Responsive layouts for mobile, tablet, and desktop
 - 🌈 Color palette and typography specifications
@@ -338,7 +340,8 @@ The design includes:
 
 > **Note for Developers:** Always check the Figma design before building new components. Maintain pixel-perfect implementations where possible, and consult with the design team for any deviations.
 
----
+***
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -359,18 +362,21 @@ Contributions are welcome! Please follow these steps:
 - Add tests for new features
 - Update documentation if needed
 
----
+***
 
 ## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
----
+***
 
 ## 🙏 Acknowledgments
 
 - Built with ❤️ for pet lovers everywhere
 - Powered by blockchain technology for transparent, trustworthy pet adoption
----
+
+***
 
 **Made with 🐾 by the PetAd Team**
+
+Thank you

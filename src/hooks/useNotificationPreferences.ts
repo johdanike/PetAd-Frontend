@@ -1,12 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { getApiClient } from "../lib/api-client";
+import { apiClient } from "../lib/api-client";
+import { useApiQuery } from "./useApiQuery";
 import type { NotificationPreferences } from "../types/notifications";
 
 export const useNotificationPreferences = () => {
-  return useQuery({
-    queryKey: ["notificationPreferences"],
-    queryFn: async (): Promise<NotificationPreferences> => {
-      return getApiClient().get("/notifications/preferences");
-    },
-  });
+  return useApiQuery<NotificationPreferences>(
+    ["notificationPreferences"],
+    () => apiClient.get<NotificationPreferences>("/notifications/preferences"),
+  );
 };

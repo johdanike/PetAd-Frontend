@@ -1,49 +1,46 @@
-import { useState, useEffect } from 'react';
-import type { DisputeDetail } from '../pages/disputes/types';
+import { useMemo } from "react";
+import { apiClient } from "../lib/api-client";
+import { useApiQuery } from "./useApiQuery";
+import type { DisputeDetail } from "../pages/disputes/types";
+
+interface DisputeDetailApiResponse extends DisputeDetail {
+  resolution?: {
+    txHash?: string;
+  } | null;
+}
+
+export interface EnrichedDisputeDetail extends DisputeDetail {
+  escrowOnChainStatus: string;
+  stellarExplorerUrl: string;
+  resolutionTxHash?: string;
+}
+
+function buildStellarExplorerUrl(accountId: string): string {
+  return `https://stellar.expert/explorer/public/account/${encodeURIComponent(accountId)}`;
+}
 
 export function useDisputeDetail(disputeId: string) {
-  const [data, setData] = useState<DisputeDetail | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const query = useApiQuery<DisputeDetailApiResponse>(
+    ["dispute-detail", disputeId],
+    () => apiClient.get<DisputeDetailApiResponse>(`/disputes/${disputeId}`),
+    { enabled: Boolean(disputeId) },
+  );
 
-  useEffect(() => {
-    setIsLoading(true);
+  const enrichedData = useMemo<EnrichedDisputeDetail | undefined>(() => {
+    if (!query.data) {
+      return undefined;
+    }
 
-    const mockData: DisputeDetail = {
-      id: disputeId || "DSP-10293",
-      raisedBy: {
-        name: "Jane Doe",
-        role: "ADOPTER",
-      },
-      reason: "Pet health issues not disclosed prior to adoption.",
-      status: "UNDER_REVIEW",
-      slaStatus: "AT_RISK",
-      escrow: {
-        status: "LOCKED",
-        accountId: "GB3P...4XYZ",
-      },
-      evidence: [
-        {
-          id: "ev-1",
-          fileName: "vet_report.pdf",
-          url: "#",
-          sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        },
-        {
-          id: "ev-2",
-          fileName: "chat_logs.png",
-          url: "#",
-          sha256: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
-        }
-      ],
+    return {
+      ...query.data,
+      escrowOnChainStatus: query.data.escrow.status,
+      stellarExplorerUrl: buildStellarExplorerUrl(query.data.escrow.accountId),
+      resolutionTxHash: query.data.resolution?.txHash,
     };
+  }, [query.data]);
 
-    const timer = setTimeout(() => {
-      setData(mockData);
-      setIsLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [disputeId]);
-
-  return { data, isLoading };
+  return {
+    ...query,
+    data: enrichedData,
+  };
 }

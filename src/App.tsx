@@ -11,6 +11,7 @@ import ForgetPasswordPage from "./pages/forgetPasswordPage";
 import InterestPage from "./pages/interestPage";
 import NotificationPage from "./pages/notificationPage";
 import NotificationPreferencesPage from "./pages/NotificationPreferencesPage";
+import NotificationsPage from "./pages/settings/NotificationsPage";
 import ResetPasswordPage from "./pages/resetPasswordPage";
 import { AdoptionCompletionDemo } from "./pages/AdoptionCompletionDemo";
 import PetListingDetailsPage from "./pages/PetlistingdetailsPage";
@@ -54,6 +55,10 @@ function App() {
         <Route
           path="/notification-preferences"
           element={<NotificationPreferencesPage />}
+        />
+        <Route
+          path="/settings/notifications"
+          element={<NotificationsPage />}
         />
         <Route
           path="/adoption/:adoptionId/settlement"

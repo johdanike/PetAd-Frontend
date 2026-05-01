@@ -142,17 +142,68 @@ export const disputeHandlers = [
 		});
 	}),
 
-	// GET /api/disputes/:id — get a single dispute with evidence and timeline
+	// GET /api/disputes/:id — detail payload used by dispute detail hook
 	http.get("/api/disputes/:id", async ({ request, params }) => {
 		await delay(getDelay(request));
-		const found = MOCK_DISPUTES.find((d) => d.id === params.id);
-		if (!found) {
+		const id = String(params.id ?? "");
+
+		if (id === "not-found") {
 			return HttpResponse.json(
 				{ message: `Dispute '${params.id}' not found` },
 				{ status: 404 },
 			);
 		}
-		return HttpResponse.json<Dispute>(found);
+
+		if (id === "dispute-resolved") {
+			return HttpResponse.json({
+				id,
+				raisedBy: {
+					name: "Alice Smith",
+					role: "ADOPTER",
+				},
+				reason: "Health condition mismatch",
+				status: "RESOLVED",
+				slaStatus: "ON_TIME",
+				escrow: {
+					status: "RELEASED",
+					accountId: "GDRS77ACCOUNT12345",
+				},
+				evidence: [
+					{
+						id: "ev-r-1",
+						fileName: "vet-report.pdf",
+						url: "/mock-files/vet-report-ev001.pdf",
+						sha256: "resolved-evidence-sha256",
+					},
+				],
+				resolution: {
+					txHash: "txhash-resolved-123456",
+				},
+			});
+		}
+
+		return HttpResponse.json({
+			id,
+			raisedBy: {
+				name: "Bob Johnson",
+				role: "ADOPTER",
+			},
+			reason: "Delayed handover",
+			status: "OPEN",
+			slaStatus: "AT_RISK",
+			escrow: {
+				status: "LOCKED",
+				accountId: "GABC88ACCOUNT67890",
+			},
+			evidence: [
+				{
+					id: "ev-o-1",
+					fileName: "handover-chat.png",
+					url: "/mock-files/vet-report-ev001.pdf",
+					sha256: "open-evidence-sha256",
+				},
+			],
+		});
 	}),
 
 	// POST /api/disputes — raise a new dispute

@@ -5,6 +5,23 @@ export interface EvidenceFile {
   sha256: string;
 }
 
+export type ResolutionType = "REFUND" | "RELEASE" | "SPLIT";
+
+export interface ResolutionDistributionItem {
+  recipient: string;
+  amount: string;
+  percentage: number;
+}
+
+export interface DisputeResolution {
+  type: ResolutionType;
+  adminNote: string;
+  resolvedBy: string;
+  resolvedAt: string;
+  resolutionTxHash?: string;
+  splitDistribution?: ResolutionDistributionItem[];
+}
+
 export interface DisputeDetail {
   id: string;
   raisedBy: {
@@ -19,4 +36,5 @@ export interface DisputeDetail {
     accountId: string;
   };
   evidence: EvidenceFile[];
+  resolution?: DisputeResolution | null;
 }

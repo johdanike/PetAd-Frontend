@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useDisputeDetail } from '../../hooks/useDisputeDetail';
 import { DisputeInfoSection } from '../../components/dispute/DisputeInfoSection';
+import { DisputeResolutionSection } from '../../components/dispute/DisputeResolutionSection';
 import { SkeletonLoader } from '../../components/loaders/SkeletonLoader';
 
 export function DisputeDetailPage() {
@@ -17,7 +18,10 @@ export function DisputeDetailPage() {
             <SkeletonLoader />
           </div>
         ) : data ? (
-          <DisputeInfoSection dispute={data} />
+          <>
+            <DisputeInfoSection dispute={data} />
+            <DisputeResolutionSection dispute={data} />
+          </>
         ) : (
           <div className="bg-red-50 text-red-600 p-4 rounded-md">
             Dispute not found.

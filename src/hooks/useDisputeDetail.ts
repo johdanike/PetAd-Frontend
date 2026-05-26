@@ -1,11 +1,16 @@
 import { useMemo } from "react";
 import { apiClient } from "../lib/api-client";
 import { useApiQuery } from "./useApiQuery";
-import type { DisputeDetail } from "../pages/disputes/types";
+import type { DisputeDetail, DisputeResolution } from "../pages/disputes/types";
 
-interface DisputeDetailApiResponse extends DisputeDetail {
+interface DisputeDetailApiResponse extends Omit<DisputeDetail, "resolution"> {
   resolution?: {
+    type?: string;
+    adminNote?: string;
+    resolvedBy?: string;
+    resolvedAt?: string;
     txHash?: string;
+    splitDistribution?: DisputeResolution["splitDistribution"];
   } | null;
 }
 
@@ -31,11 +36,33 @@ export function useDisputeDetail(disputeId: string) {
       return undefined;
     }
 
+    const raw = query.data;
+
+    // Map API resolution shape to our typed DisputeResolution
+    let resolution: DisputeResolution | null = null;
+    if (
+      raw.resolution &&
+      raw.resolution.type &&
+      (raw.resolution.type === "REFUND" ||
+        raw.resolution.type === "RELEASE" ||
+        raw.resolution.type === "SPLIT")
+    ) {
+      resolution = {
+        type: raw.resolution.type,
+        adminNote: raw.resolution.adminNote ?? "",
+        resolvedBy: raw.resolution.resolvedBy ?? "",
+        resolvedAt: raw.resolution.resolvedAt ?? "",
+        resolutionTxHash: raw.resolution.txHash,
+        splitDistribution: raw.resolution.splitDistribution,
+      };
+    }
+
     return {
-      ...query.data,
-      escrowOnChainStatus: query.data.escrow.status,
-      stellarExplorerUrl: buildStellarExplorerUrl(query.data.escrow.accountId),
-      resolutionTxHash: query.data.resolution?.txHash,
+      ...raw,
+      resolution,
+      escrowOnChainStatus: raw.escrow.status,
+      stellarExplorerUrl: buildStellarExplorerUrl(raw.escrow.accountId),
+      resolutionTxHash: raw.resolution?.txHash,
     };
   }, [query.data]);
 

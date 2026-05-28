@@ -83,7 +83,7 @@ let mockNotifications: Notification[] = [
   },
 ];
 
-const mockNotificationPreferences: NotificationPreferences = {
+let mockNotificationPreferences: NotificationPreferences = {
   APPROVAL_REQUESTED: true,
   ESCROW_FUNDED: true,
   DISPUTE_RAISED: true,
@@ -170,6 +170,19 @@ export const notifyHandlers = [
   // PATCH /api/notifications/preferences - update notification preferences
   http.patch("**/api/notifications/preferences", async ({ request }) => {
     await delay(getDelay(request));
+
+    try {
+      const body = (await request.json()) as Partial<NotificationPreferences> | null;
+      if (body && typeof body === "object") {
+        mockNotificationPreferences = {
+          ...mockNotificationPreferences,
+          ...body,
+        };
+      }
+    } catch {
+      // If parsing fails, continue and return 204 to keep tests resilient
+    }
+
     return new HttpResponse(null, { status: 204 });
   }),
 ];

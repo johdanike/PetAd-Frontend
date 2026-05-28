@@ -175,7 +175,7 @@ export const notifyHandlers = [
       const body = await request.json();
       // Merge incoming preferences into the mock preferences to simulate persistence
       mockNotificationPreferences = { ...mockNotificationPreferences, ...(body ?? {}) };
-    } catch (err) {
+    } catch {
       // If parsing fails, continue and return 204 to keep tests resilient
     }
 

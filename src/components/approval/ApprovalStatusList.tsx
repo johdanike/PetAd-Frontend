@@ -127,7 +127,6 @@ function StateIcon({ state }: StateIconProps) {
 export function ApprovalStatusList({
   required,
   given,
-  pending: _pending, // used only as a hint — state is derived from `given`
 }: ApprovalStatusListProps) {
   if (required.length === 0) return null;
 

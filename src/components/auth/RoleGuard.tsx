@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export interface RoleGuardProps {
   /** The role(s) required to view this component */

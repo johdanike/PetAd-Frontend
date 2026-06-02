@@ -21,7 +21,6 @@ export interface ApprovalStatusListProps {
   pending: string[];
 }
 
-// Nonthing added
 
 
 type RowState = "approved" | "rejected" | "pending";

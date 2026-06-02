@@ -122,8 +122,3 @@ export const ApprovalStatusWidget: React.FC<ApprovalStatusWidgetProps> = ({
     </div>
   );
 };
-
-
-  // Issues Implemented
-
-  
